@@ -23,7 +23,9 @@ export default function App() {
     setData(state);
   };
 
-  // inprogress
+  const onDragStart = (e,item) => {
+    e.dataTransfer.setData('dataId', item.id);
+  };
 
   const renderData = (currentStatus, nextStatus) => {
     return data
@@ -33,6 +35,8 @@ export default function App() {
           onClick={() => handleChange(item, nextStatus)}
           className="item-box"
           key={index}
+          draggable="true"
+          onDragStart={(e) => onDragStart(e,item)}
         >
           {item.title}
         </div>
