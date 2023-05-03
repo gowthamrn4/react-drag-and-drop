@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState } from 'react';
 import './style.css';
 
 export default function App() {
@@ -9,7 +9,18 @@ export default function App() {
       content: 'new task created by gowtham',
       status: 'pending',
     },
+    {
+      id: 2,
+      title: 'Task 2',
+      content: 'new task created by gowtham',
+      status: 'pending',
+    },
   ]);
+
+  const [input, setInput] = useState({
+    title: null,
+    content: null,
+  });
 
   const handleChange = (id, status) => {
     const state = data.map((value) =>
@@ -37,6 +48,31 @@ export default function App() {
     e.preventDefault();
   };
 
+  const handleInputChanges = (e, inputName) => {
+    const state = {
+      ...input,
+      [inputName]: e.target.value,
+    };
+    setInput(state);
+  };
+
+  const addNewTask = () => {
+    if (input.title && input.content) {
+      setData([
+        ...data,
+        {
+          ...input,
+          id: Date.now(),
+          status: 'pending',
+        },
+      ]);
+      setInput({
+        title: '',
+        content: '',
+      });
+    }
+  };
+
   const renderData = (currentStatus, nextStatus) => {
     return data
       .filter((item) => item.status === currentStatus)
@@ -60,6 +96,8 @@ export default function App() {
           onDrop={(e) => dropItem(e, 'pending')}
           onDragOver={(e) => allowDrop(e)}
         >
+          <p>Pending</p>
+          <hr/>
           {renderData('pending', 'inprogress')}
         </div>
         <div
@@ -67,6 +105,8 @@ export default function App() {
           onDrop={(e) => dropItem(e, 'inprogress')}
           onDragOver={(e) => allowDrop(e)}
         >
+          <p>InProgress</p>
+          <hr/>
           {renderData('inprogress', 'done')}
         </div>
         <div
@@ -74,10 +114,29 @@ export default function App() {
           onDrop={(e) => dropItem(e, 'done')}
           onDragOver={(e) => allowDrop(e)}
         >
+          <p>Done</p>
+          <hr/>
           {renderData('done', 'pending')}
         </div>
       </div>
-      <div className="input-container"></div>
+      <div className="input-container">
+        <span>Create new task</span>
+        <div>
+          <input
+            type="input"
+            onChange={(e) => handleInputChanges(e, 'title')}
+            placeholder="Title"
+            value={input.title}
+          />
+          <input
+            type="input"
+            onChange={(e) => handleInputChanges(e, 'content')}
+            placeholder="content"
+            value={input.content}
+          />
+          <button onClick={addNewTask}>Add</button>
+        </div>
+      </div>
     </>
   );
 }

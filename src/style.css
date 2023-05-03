@@ -27,4 +27,30 @@ p {
   background-color: antiquewhite;
   padding: 10px;
   cursor: pointer;
+  margin: 10px;
 }
+
+input,button {
+  padding: 8px;
+  border: 1px solid antiquewhite;
+  margin: 10px;
+}
+
+span {
+  font-size: 17px;
+  font-weight: 600;
+  margin: 10px;
+}
+
+button {
+  width: 100px;
+}
+ p {
+   margin: 10px;
+   text-align: center;
+   font-weight: 600;
+ }
+
+ hr {
+  border-top: 3px solid antiquewhite;
+ }
